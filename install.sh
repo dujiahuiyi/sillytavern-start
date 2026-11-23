@@ -20,11 +20,14 @@ fi
 
 chmod +x "$SCRIPT_DIR/menu.sh" "$SCRIPT_DIR/install.sh"
 
-# 添加快捷启动命令 st
+# 添加快捷启动命令 st 并设置打开 Termux 自动进入菜单
 touch "$HOME/.bashrc"
 if ! grep -q "alias st=" "$HOME/.bashrc"; then
-    echo "alias st='bash $HOME/sillytavern-start/menu.sh'" >> "$HOME/.bashrc"
+    cat >> "$HOME/.bashrc" << 'EOF'
+alias st='bash $HOME/sillytavern-start/menu.sh'
+if [ -z "$ST_MENU_LOADED" ] && [ -f "$HOME/sillytavern-start/menu.sh" ]; then
+    export ST_MENU_LOADED=1
+    bash "$HOME/sillytavern-start/menu.sh"
 fi
-
-echo ">>> 部署完成！以后输入 st 即可打开菜单。"
-bash "$SCRIPT_DIR/menu.sh"
+EOF
+fi
