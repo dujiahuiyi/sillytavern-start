@@ -90,8 +90,7 @@ start_st() {
     fi
     check_pkg nodejs node
     echo -e "${GREEN}>>> 正在启动 SillyTavern (按 Ctrl+C 停止)...${NC}"
-    cd "$ST_DIR" || return
-    node server.js
+    cd "$ST_DIR" && bash start.sh
     pause
 }
 
